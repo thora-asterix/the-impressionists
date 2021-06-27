@@ -17,7 +17,9 @@ const getArtworks = async function (artist,cardId) {
   );
   const data = await res.json();
   cardId.innerHTML = '';
-  data.objectIDs.forEach(item => artwork(item,cardId))
+  data.objectIDs.forEach(item => artwork(item,cardId));
+
+  if (!res.ok) throw new Error(`${data.message} (${res.status})`);
 } catch(err) {
   console.log(err);
 }
@@ -32,6 +34,9 @@ const artwork = async function (id,cardId) {
   );
   const data = await res.json();
   //destructuring data object
+
+  if (!res.ok) throw new Error(`${data.message} (${res.status})`);
+  
   const { title, objectDate, dimensions, medium, primaryImageSmall } = data;
 
 
@@ -74,5 +79,3 @@ getArtworks("Vincent van Gogh",cardsVanGogh);
 getArtworks("Paul Gauguin", cardsPaulGauguin);
 getArtworks("Paul Cézanne", cardsPaulCezanne);
 getArtworks("Edgar Degas", cardsEdgarDegas);
-//  getArtworks("Claude Monet")
-// artwork(435882);
